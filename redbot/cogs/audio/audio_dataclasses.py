@@ -463,6 +463,8 @@ class Query:
             track = str(track)
             if track.startswith("spotify:"):
                 returning["spotify"] = True
+                if ":intl-" in track:
+                    track = track.split(":intl-")[0] + ":track" + track.split(":track")[1]
                 if ":playlist:" in track:
                     returning["playlist"] = True
                 elif ":album:" in track:
@@ -532,6 +534,8 @@ class Query:
                         else:
                             returning["single"] = True
                     elif url_domain == "spotify.com":
+                        if "spotify.com/intl-" in track and "track" in track:
+                            track = track.split("/intl-")[0] + "/track" + track.split("/track")[1]
                         returning["spotify"] = True
                         if "/playlist/" in track:
                             returning["playlist"] = True
